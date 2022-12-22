@@ -7,8 +7,9 @@ export const SignUp = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event) => {
         try{
+            event.preventDefault()
             if(!name || !email || !password){
                 toast.error("Provide all Details")
                 return
@@ -47,7 +48,7 @@ export const SignUp = () => {
                 <input type="text" onChange={(e)=>setName(e.target.value)} className="pl-[4px] rounded-md border-2 border-slate-400 shadow-black" placeholder="Enter Your Name" name="" id="" />
                 <input type="email" onChange={(e)=>setEmail(e.target.value)} className="pl-[4px] rounded-md border-2 border-slate-400 shadow-black" placeholder="Enter Your Email" />
                 <input type="password" onChange={(e)=>setPassword(e.target.value)} className="pl-[4px] rounded-md border-2 border-slate-400 shadow-black" placeholder="Enter Your Password" name="" id="" />
-                <button type="submit" className="px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">SignUp</button>
+                <button className="px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">SignUp</button>
             </form>
         </div>
     )
