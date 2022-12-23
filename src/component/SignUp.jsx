@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, {useState} from "react";
 import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export const SignUp = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         try{
@@ -32,6 +34,7 @@ export const SignUp = () => {
             }
 
             if(res.data.success){
+                navigate("/home")
                 toast.success("Successfully created a account")
             }
 
