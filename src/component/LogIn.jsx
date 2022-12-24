@@ -3,17 +3,19 @@ import React, {useState} from "react";
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+// import Cookies from "js-cookie";
 
-export const SignUp = () => {
-    const [name, setName] = useState("");
+
+export const LogIn = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    axios.defaults.withCredentials = true;
 
     const handleSubmit = async (event) => {
         try{
             event.preventDefault()
-            if(!name || !email || !password){
+            if(!email || !password){
                 toast.error("Provide all Details")
                 return
             }
@@ -22,12 +24,15 @@ export const SignUp = () => {
                 toast.error("Password must be less than")
                 return
             }
-
-            const res = await axios.post("http://localhost:4000/api/createUser",{
-                name: name,
-                email: email,
-                password: password
+            console.log("Yha TAk");
+            const res = await axios.post("/api/login",{
+                email,
+                password
+            },{
+                headers: { 'Content-Type': 'application/json' },
+                withCredentials: true
             })
+            console.log(JSON.stringify(res?.data));
 
             if(!res){
                 toast.error("Wrong Route")
@@ -35,11 +40,14 @@ export const SignUp = () => {
             }
 
             if(res.data.success){
-                setName("")
                 setEmail("")
                 setPassword("")
+                // Cookies.set("token", res.data.token, {
+                //     expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+                //     httpOnly: true
+                //   });
                 navigate("/home")
-                toast.success("Successfully created a account")
+                toast.success("Successfully Logged In")
                 return
             }
 
@@ -51,14 +59,13 @@ export const SignUp = () => {
         <div className="w-full h-[600px] flex flex-col justify-center items-center">
             <form onSubmit={handleSubmit} className="flex w-[300px] h-full flex-col justify-center gap-2">
                 <div className="text-center">
-                    <h2 className="font-semibold text-lg" >Sign Up</h2>
+                    <h2 className="font-semibold text-lg" >Sign In</h2>
                 </div>
-                <input type="text" onChange={(e)=>setName(e.target.value)} className="pl-[4px] rounded-md border-2 border-slate-400 shadow-black" placeholder="Enter Your Name" name="" />
                 <input type="email" onChange={(e)=>setEmail(e.target.value)} className="pl-[4px] rounded-md border-2 border-slate-400 shadow-black" placeholder="Enter Your Email" />
                 <input type="password" onChange={(e)=>setPassword(e.target.value)} className="pl-[4px] rounded-md border-2 border-slate-400 shadow-black" placeholder="Enter Your Password" name="" />
-                <button className="px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">SignUp</button>
+                <button className="px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">LogIn</button>
             </form>
-            <Link to="/login">Already A User? Click To Log In</Link>
+            <Link to="/">New User? Click To Register</Link>
             <Toaster />
         </div>
     )
