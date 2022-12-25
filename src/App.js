@@ -5,6 +5,7 @@ import { SignUp } from "./component/SignUp";
 import { LogIn } from "./component/LogIn";
 import { Route, Routes} from "react-router-dom";
 
+
 export function App(){
     return(
         <>

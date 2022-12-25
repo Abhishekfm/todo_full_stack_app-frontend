@@ -11,6 +11,7 @@ export const LogIn = () => {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     axios.defaults.withCredentials = true;
+    const Base_URL = "http://localhost:4000";
 
     const handleSubmit = async (event) => {
         try{
@@ -25,14 +26,12 @@ export const LogIn = () => {
                 return
             }
             console.log("Yha TAk");
-            const res = await axios.post("/api/login",{
+            const res = await axios.post(`${Base_URL}/api/login`,{
                 email,
                 password
-            },{
-                headers: { 'Content-Type': 'application/json' },
-                withCredentials: true
-            })
-            console.log(JSON.stringify(res?.data));
+            }, { withCredentials: true })
+            // console.log(JSON.stringify(res?.data));
+            console.log(res);
 
             if(!res){
                 toast.error("Wrong Route")
@@ -52,6 +51,7 @@ export const LogIn = () => {
             }
 
         } catch(err){
+            toast.error("Wrong Credentials")
             console.log(err);
         }
     }
