@@ -3,6 +3,7 @@ import React from "react";
 // import { useEffect } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const Home = ()=>{
     const navigate = useNavigate();
@@ -29,7 +30,7 @@ export const Home = ()=>{
     return (
         <div>
             <h1 className="text-blue-600">Welcome to Todo App</h1>
-            <p>Dashboard</p>
+            <Link to="/dashboard">Dashboard</Link>
             <Toaster/>
         </div>
     )
