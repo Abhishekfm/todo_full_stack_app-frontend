@@ -55,6 +55,10 @@ export const LogIn = () => {
         }
     }
     return (
+        <>
+        <div className="text-blue-600 font-bold text-center text-[24px] w-[100%]">
+        <Link to="/home">TODO APP</Link>
+        </div>
         <div className="w-full h-[600px] flex flex-col justify-center items-center">
             <form onSubmit={handleSubmit} className="flex w-[300px] h-full flex-col justify-center gap-2">
                 <div className="text-center">
@@ -67,5 +71,6 @@ export const LogIn = () => {
             <Link to="/">New User? Click To Register</Link>
             <Toaster />
         </div>
+        </>
     )
 }

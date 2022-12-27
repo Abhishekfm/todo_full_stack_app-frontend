@@ -48,6 +48,10 @@ export const SignUp = () => {
         }
     }
     return (
+        <>
+        <div className="text-blue-600 font-bold text-center text-[24px] w-[100%]">
+        <Link to="/home">TODO APP</Link>
+        </div>
         <div className="w-full h-[600px] flex flex-col justify-center items-center">
             <form onSubmit={handleSubmit} className="flex w-[300px] h-full flex-col justify-center gap-2">
                 <div className="text-center">
@@ -59,8 +63,8 @@ export const SignUp = () => {
                 <button className="px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">SignUp</button>
             </form>
             <Link to="/login">Already A User? Click To Log In</Link>
-            <Link to="/home">Check If you are logged In</Link>
             <Toaster />
         </div>
+        </>
     )
 }
