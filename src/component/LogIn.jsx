@@ -46,7 +46,6 @@ export const LogIn = () => {
                 //     httpOnly: true
                 //   });
                 navigate("/home")
-                toast.success("Successfully Logged In")
                 return
             }
 

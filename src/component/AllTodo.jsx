@@ -5,13 +5,19 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { EditTodo } from "./EditTodo";
 import rightArrow from "../rightArrow.png"
+import logout from "../logout.png"
+import { useNavigate } from "react-router-dom";
 
 export const AllTodo = () => {
-    const [isShown, setIsShown] = useState(true);
+    const [isShown, setIsShown] = useState(false)
     const [todo,setTodo] = useState([])
     const [todoTitle, setTodoTitle] = useState("")
+    const [todoTitleIn, setTodoTitleIn] = useState("")
+    const [searchText, setSearch] = useState("")
     const [taskTitle, setTaskTitle] = useState("")
+    const [taskTitleIn, setTaskTitleIn] = useState("")
     const [isLoading, setLoading] = useState(true)
+    const navigate = useNavigate();
     const serverUrl = "http://localhost:4000"
     const getAll = async() => {
         try {
@@ -63,12 +69,13 @@ export const AllTodo = () => {
             toast.error("Wrong Route")
             return
         } else {
+            setTodoTitle("")
             setTodo(await getAll());
         }
     }
     const editClicked = async(id)=>{
         console.log("inside me");
-        const title = todoTitle
+        const title = todoTitleIn
         if(!title){
             toast.error("Empty title")
             return
@@ -96,7 +103,7 @@ export const AllTodo = () => {
     const handleClick = event => {
         setIsShown(current => !current)
     }
-    const createTask = async (todoId, taskId) => {
+    const createTask = async (todoId) => {
         const taskName = taskTitle
         if(!taskName){
             toast.error("Task Title cannot be Empty")
@@ -117,7 +124,7 @@ export const AllTodo = () => {
         // if(editTaskClicked === "Edit"){
         //     edit
         // }
-        const taskName = taskTitle
+        const taskName = taskTitleIn
         if(!taskName){
             toast.error("Task Title cannot be Empty")
             return
@@ -142,32 +149,153 @@ export const AllTodo = () => {
             setTodo(await getAll())
         }
     }
+    const sortByCreation = async () => {
+        try {
+            const res = await axios.get(`${serverUrl}/u/todo/sort`,{ withCredentials: true})
+            if(!res){
+                toast.error("Wrong Route")
+                return
+            }else{
+                setTodo(res.data.sortedTodosAtCreation)
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const sortByUpdation = async () => {
+        try {
+            const res = await axios.get(`${serverUrl}/u/todo/sort`,{ withCredentials: true})
+            if(!res){
+                toast.error("Wrong Route")
+                return
+            }else{
+                setTodo(res.data.sortedTodosAtUpdation)
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const searchHere = async () => {
+        try {
+            console.log(searchText);
+            if(!searchText){
+                toast.error("Search Text Cannot be Empty")
+                setTodo(await getAll())
+                return
+            }
+            const res = await axios.post(`${serverUrl}/u/todo/search`,{
+                searchText
+            },{ withCredentials: true})
+            if(!res){
+                toast.error("Wrong Route")
+                return
+            }else{
+                if(res.data.result.length === 0){
+                    toast.error("No Result Found")
+                    return
+                }
+                console.log(res.data.result);
+                setTodo(res.data.result)
+            }
+        }catch(e){
+            console.log(e);
+        }
+    }
+    const logMeOut = async()=>{
+        try {
+            const res = await axios.get(`${serverUrl}/api/logout`,{withCredentials:true})
+            if(!res){
+                toast.error("Wrong Path")
+                return
+            } else{
+                toast.success("Successfully Logout")
+                navigate("/")
+                return;
+            }
+        } catch (error) {
+            navigate('/');
+            console.log(error);
+        }
+    }
+    const TodoDone = async (todoId, taskId, val) => {
+        try {
+            const res = await axios.post(`${serverUrl}/u/todo/task/done/${todoId}/${taskId}`,{
+                done:val
+            },{withCredentials:true})
+            if(!res){
+                toast.error("Wrong Route")
+                return
+            } else{
+                if(val){
+                    toast('Good Job!', {
+                        icon: '👏',
+                    });
+                }else{
+                    toast('Still Pending!', {
+                        icon: '😤',
+                    });
+                }
+                console.log(res);
+                return
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
     return (
-        <div>
-            <form onSubmit={onSubmit} action="" key={todo[0]._id} className="flex flex-row text-[25px] justify-center">
-                <input className="" type="text" key={todo[0]._id} placeholder="Enter New Todo" onChange={(e)=>{setTodoTitle(e.target.value)}} />
-                <button onClick={()=>{createTodo()}}>Save</button>
-            </form>
+        <div className="flex flex-col bg-[#FAF8F1]">
+            <div className="flex justify-around bg-[#E5BA73] p-[15px] fixed w-[100%]">
+                <div className="flex w-1/2 pl-[120px] gap-2">
+                    <input className="pl-2 text-[24px] rounded" type="text" placeholder="Search here...." onChange={(e)=>{setSearch(e.target.value)}} />
+                    <button onClick={()=>{searchHere()}} className="bg-transparent hover:bg-black text-black font-semibold hover:text-white py-2 px-4 border border-black hover:border-transparent rounded">Search</button>
+                </div>
+                <button onClick={()=>{sortByCreation()}} className="bg-transparent hover:bg-black text-black font-semibold hover:text-white py-2 px-4 border border-black hover:border-transparent rounded">By Creation</button>
+                <button onClick={()=>{sortByUpdation()}} className="bg-transparent hover:bg-black text-black font-semibold hover:text-white py-2 px-4 border border-black hover:border-transparent rounded">By Updation</button>
+                <button className="flex margin-auto items-center text-[18px] font-semibold" onClick={()=>{logMeOut()}}>Logout<img src={logout} alt="" /></button>
+            </div>
+            <div className="h-[100px]"></div>
+            <div className="flex m-8 gap-8 justify-center">
+                <h1 className="underline decoration-[#E5BA73] font-bold italic text-[24px]">TODOS</h1>
+                <form onSubmit={onSubmit} action="" className="justify-self-center gap-2 flex flex-row text-[20px] ">
+                    <input className="pl-2 border-2 border-black rounded" type="text" placeholder="Create New Todo" value={todoTitle} onChange={(e)=>{setTodoTitle(e.target.value)}} />
+                    <div>
+                        <button className="bg-transparent text-[20px] hover:bg-black text-black font-semibold hover:text-white py-2 px-4 border border-black hover:border-transparent rounded" onClick={()=>{createTodo()}}>Save</button>
+                    </div>
+                </form>
+                
+            </div>
             {todo && todo.map((item,index)=>{
                 return (
-                    <div className="flex flex-col justify-between">
-                        <div key={item._id} className="flex flex-row text-[25px] justify-center w-1/2">
-                            <input className="" type="text" key={item._id} defaultValue={item.title} onChange={(e)=>{setTodoTitle(e.target.value)}} />
-                            <button onClick={()=>{editClicked(item._id)}} className="mr-[10px]">Save</button>
-                            <button onClick={()=>{deleteClicked(item._id)}} className="">Delete</button>
-                            <button onClick={handleClick} ><img src={rightArrow} alt="" /></button>
+                    <div className={isShown ? "flex flex-row shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]  p-4 m-4 justify-around" : "flex flex-row p-4 m-4 justify-around border-b-2 border-gray "}>
+                        <div key={item._id} className="flex flex-row text-[22px] border-r-4 border-gray justify-center">
+                            <div className="">
+                                <input className="bg-[#FAF8F1] margin-x-auto" type="text" key={item._id} defaultValue={item.title} onChange={(e)=>{setTodoTitleIn(e.target.value)}} />
+                            </div>
+                            <div>
+                                <button onClick={()=>{editClicked(item._id)}} className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 mr-[10px] font-semibold decoration-[#E5BA73] ">Save</button>
+                            </div>
+                            <div>
+                                <button onClick={()=>{deleteClicked(item._id)}} className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 font-semibold decoration-[#E5BA73] ">Delete</button>
+                            </div>
+                            <div>
+                                <button onClick={handleClick} ><img src={rightArrow} alt="" /></button>
+                            </div>
                         </div>
-                        <div className="flex flex-col">
-                            <form onSubmit={onSubmit} action="" key={item._id} className="flex flex-row text-[25px] justify-center">
-                                <input className="" type="text" key={item._id} placeholder="Enter New Task" onChange={(e)=>{setTaskTitle(e.target.value)}} />
-                                <button onClick={()=>{createTask(item._id)}}>Save</button>
+                        <div  className={isShown ? 'display-block flex flex-col text-[20px] gap-2 justify-center' : 'hidden'}>
+                            <h1 className="underline decoration-[#E5BA73] font-bold italic text-[24px]">TASKS</h1>
+                            <form onSubmit={onSubmit} action="" key={item._id} className="flex flex-row text-[20px] justify-center">
+                                <input className="pl-2 border-2 border-black rounded mr-2" type="text" key={item._id} placeholder="Create New Task" value={taskTitle} onChange={(e)=>{setTaskTitle(e.target.value)}} />
+                                <button className="bg-transparent text-[20px] hover:bg-black text-black font-semibold hover:text-white py-2 px-4 border border-black hover:border-transparent rounded" onClick={()=>{createTask(item._id)}}>Save</button>
                             </form>
                         {item.tasks && item.tasks.map((ele,index)=>{
                             return (
-                                <div key={ele._id} className={isShown ? 'display-block flex flex-row text-[25px]  justify-center' : 'hidden'}>
-                                    <input key={ele._id} defaultValue={ele.taskName} onChange={(e)=>{setTaskTitle(e.target.value)}} type="text" />
-                                    <button onClick={()=>{editTask(item._id, ele._id)}} className="mr-[10px]">Save</button>
-                                    <button onClick={()=>{deleteTask(item._id, ele._id)}}>Delete</button>
+                                <div key={ele._id} className={isShown ? 'display-block items-center flex flex-row text-[20px] gap-2 justify-center' : 'hidden'}>
+                                    <div>
+                                        <input className="w-4 h-4 focus:ring-blue-500 border-0 rounded" type="checkbox" defaultChecked={ele.done} onClick={(event)=>{TodoDone(item._id, ele._id, event.target.checked)}} />
+                                    </div>
+                                    <input className="bg-[#FAF8F1] " key={ele._id} defaultValue={ele.taskName} onChange={(e)=>{setTaskTitleIn(e.target.value)}} type="text" />
+                                    <button onClick={()=>{editTask(item._id, ele._id)}} className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 mr-[10px] font-semibold decoration-[#E5BA73] ">Save</button>
+                                    <button onClick={()=>{deleteTask(item._id, ele._id)}} className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 mr-[10px] font-semibold decoration-[#E5BA73] ">Delete</button>
                                 </div>
                             )
                         })}
