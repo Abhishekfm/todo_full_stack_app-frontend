@@ -23,11 +23,11 @@ export const SignUp = () => {
                 return
             }
 
-            const res = await axios.post("http://localhost:4000/api/createUser",{
+            const res = await axios.post("https://todo-backend-gamma.vercel.app/api/createUser",{
                 name: name,
                 email: email,
                 password: password
-            })
+            },{withCredentials:true})
 
             if(!res){
                 toast.error("Wrong Route")

@@ -12,7 +12,7 @@ export const Home = ()=>{
     const verify = async () => {
         // event.preventDefault();
         try {
-            const res = await axios.get("http://localhost:4000/api/dashboard",{
+            const res = await axios.get("https://todo-backend-gamma.vercel.app/api/dashboard",{
             withCredentials: true
             })
             console.log("I am inside Home frontend");

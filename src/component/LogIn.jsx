@@ -11,7 +11,13 @@ export const LogIn = () => {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     axios.defaults.withCredentials = true;
-    const Base_URL = "http://localhost:4000";
+    const Base_URL = "https://todo-backend-gamma.vercel.app";
+    let axiosConfig = {
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            "Access-Control-Allow-Origin": "*",
+        }
+      };
 
     const handleSubmit = async (event) => {
         try{
@@ -29,7 +35,8 @@ export const LogIn = () => {
             const res = await axios.post(`${Base_URL}/api/login`,{
                 email,
                 password
-            }, { withCredentials: true })
+            }, { withCredentials: true},
+            )
             // console.log(JSON.stringify(res?.data));
             console.log(res);
 

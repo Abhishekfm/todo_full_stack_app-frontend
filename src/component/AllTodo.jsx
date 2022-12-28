@@ -18,7 +18,9 @@ export const AllTodo = () => {
     const [taskTitleIn, setTaskTitleIn] = useState("")
     const [isLoading, setLoading] = useState(true)
     const navigate = useNavigate();
-    const serverUrl = "http://localhost:4000"
+    // const serverUrl = "http://localhost:4000"
+    const serverUrl = "https://todo-backend-gamma.vercel.app"
+    console.log(serverUrl);
     const getAll = async() => {
         try {
             const res = await axios.get(`${serverUrl}/u/todo`,{
