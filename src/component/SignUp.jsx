@@ -27,7 +27,12 @@ export const SignUp = () => {
                 name: name,
                 email: email,
                 password: password
-            },{ credentials: "include"})
+            },{ credentials: "include"},{
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8',
+                    "Access-Control-Allow-Origin": "*",
+                }
+              })
 
             if(!res){
                 toast.error("Wrong Route")
