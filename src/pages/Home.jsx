@@ -49,7 +49,7 @@ export const Home = ()=>{
     return (
         <div className="flex flex-col items-center">
             <div className="text-start p-4 bg-[#FAF8F1] w-[100%]">
-                <Link className="text-blue-600 font-bold text-center text-[24px] w-[100%]" to="/dashboard">Dashboard</Link>
+                <Link className="text-blue-600 font-bold text-center text-[20px] sm:text-[24px] w-[100%]" to="/dashboard">Click on Dashboard</Link>
             </div>
             <h1 className="text-[40px] pt-100px">Hi, {userName.toUpperCase()} Welcome To Todo App</h1>
             <Toaster/>

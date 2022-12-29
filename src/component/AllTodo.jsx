@@ -253,8 +253,8 @@ export const AllTodo = () => {
                     <input className="pl-2 text-[20px] md:text-[24px] w-full rounded" type="text" placeholder="Search here...." onChange={(e)=>{setSearch(e.target.value)}} />
                     <button onClick={()=>{searchHere()}} className="bg-transparent hover:bg-black text-black font-semibold hover:text-white py-2 px-4 border border-black hover:border-transparent rounded">Search</button>
                 </div>
-                <button onClick={()=>{sortByCreation()}} className="bg-transparent hover:bg-black text-black font-semibold hover:text-white py-2 px-4 border border-black hover:border-transparent rounded">By Creation</button>
-                <button onClick={()=>{sortByUpdation()}} className="bg-transparent hover:bg-black text-black font-semibold hover:text-white py-2 px-4 border border-black hover:border-transparent rounded">By Updation</button>
+                <button onClick={()=>{sortByCreation()}} className="bg-transparent hover:bg-black text-black font-semibold hover:text-white py-2 px-4 border border-black hover:border-transparent rounded"> <span className=" text-[8px] sm:text-[10px]">Sort</span> By Creation</button>
+                <button onClick={()=>{sortByUpdation()}} className="bg-transparent hover:bg-black text-black font-semibold hover:text-white py-2 px-4 border border-black hover:border-transparent rounded"><span className=" text-[8px] sm:text-[10px]">Sort</span> By Updation</button>
                 <button className="flex margin-auto items-center text-[15px] md:text-[18px] justify-end  font-semibold" onClick={()=>{logMeOut()}}>Logout<img src={logout} className="w-[18px] md:w-[24px]" alt="" /></button>
             </div>
             <div className="h-[200px] lg:h-[100px]"></div>
