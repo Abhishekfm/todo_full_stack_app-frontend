@@ -211,6 +211,7 @@ export const AllTodo = () => {
                 return
             } else{
                 sessionStorage.clear()
+                sessionStorage.removeItem("token");
                 toast.success("Successfully Logout")
                 navigate("/")
                 return;
