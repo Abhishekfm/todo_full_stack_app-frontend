@@ -37,7 +37,6 @@ export const Home = ()=>{
         })
     },[])
     if(!userName){
-        navigate("/")
         return(
             <div>
                 Loading.....
