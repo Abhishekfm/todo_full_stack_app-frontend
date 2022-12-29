@@ -35,12 +35,7 @@ export const LogIn = () => {
             const res = await axios.post(`${Base_URL}/api/login`,{
                 email,
                 password
-            }, { credentials: "include"}, {
-                headers: {
-                    'Content-Type': 'application/json;charset=UTF-8',
-                    "Access-Control-Allow-Origin": "*",
-                }
-              }
+            }, { credentials: "include"}
             )
             // console.log(JSON.stringify(res?.data));
             console.log(res);

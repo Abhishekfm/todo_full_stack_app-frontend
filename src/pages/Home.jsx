@@ -13,12 +13,7 @@ export const Home = ()=>{
     const verify = async () => {
         // event.preventDefault();
         try {
-            const res = await axios.get(`${Base_URL}/api/dashboard`,{ credentials: "include"},{
-                headers: {
-                    'Content-Type': 'application/json;charset=UTF-8',
-                    "Access-Control-Allow-Origin": "*",
-                }
-              })
+            const res = await axios.get(`${Base_URL}/api/dashboard`,{ credentials: "include"})
             console.log("I am inside Home frontend");
             console.log(res);
             if(res.data.success){

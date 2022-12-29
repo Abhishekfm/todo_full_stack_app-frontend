@@ -23,12 +23,7 @@ export const AllTodo = () => {
     console.log(serverUrl);
     const getAll = async() => {
         try {
-            const res = await axios.get(`${serverUrl}/u/todo`,{ credentials: "include"},{
-                headers: {
-                    'Content-Type': 'application/json;charset=UTF-8',
-                    "Access-Control-Allow-Origin": "*",
-                }
-              })
+            const res = await axios.get(`${serverUrl}/u/todo`,{ credentials: "include"})
             if(!res){
                 toast.error("Wrong Route")
                 return
