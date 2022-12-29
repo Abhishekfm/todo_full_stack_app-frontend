@@ -48,6 +48,7 @@ export const LogIn = () => {
             if(res.data.success){
                 setEmail("")
                 setPassword("")
+                sessionStorage.setItem("token", res.data.token);
                 // Cookies.set("token", res.data.token, {
                 //     expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
                 //     httpOnly: true

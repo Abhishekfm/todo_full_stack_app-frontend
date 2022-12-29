@@ -18,6 +18,8 @@ export const AllTodo = () => {
     const [taskTitleIn, setTaskTitleIn] = useState("")
     const [isLoading, setLoading] = useState(true)
     const navigate = useNavigate();
+    const token = sessionStorage.getItem("token");
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
     // const serverUrl = "http://localhost:4000"
     const serverUrl = "https://todo-backend-gamma.vercel.app"
     console.log(serverUrl);
@@ -210,6 +212,7 @@ export const AllTodo = () => {
             } else{
                 toast.success("Successfully Logout")
                 navigate("/")
+                sessionStorage.clear()
                 return;
             }
         } catch (error) {
