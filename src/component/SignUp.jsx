@@ -38,6 +38,7 @@ export const SignUp = () => {
                 setName("")
                 setEmail("")
                 setPassword("")
+                sessionStorage.setItem("token", res.data.token);
                 navigate("/home")
                 toast.success("Successfully created a account")
                 return

@@ -211,8 +211,8 @@ export const AllTodo = () => {
                 return
             } else{
                 toast.success("Successfully Logout")
-                navigate("/")
                 sessionStorage.clear()
+                navigate("/")
                 return;
             }
         } catch (error) {
