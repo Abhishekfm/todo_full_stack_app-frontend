@@ -27,7 +27,7 @@ export const SignUp = () => {
                 name: name,
                 email: email,
                 password: password
-            },{withCredentials:true})
+            },{ credentials: "include"})
 
             if(!res){
                 toast.error("Wrong Route")

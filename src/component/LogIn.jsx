@@ -35,7 +35,7 @@ export const LogIn = () => {
             const res = await axios.post(`${Base_URL}/api/login`,{
                 email,
                 password
-            }, { withCredentials: true},
+            }, { credentials: "include"},
             )
             // console.log(JSON.stringify(res?.data));
             console.log(res);

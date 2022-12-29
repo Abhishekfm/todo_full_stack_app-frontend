@@ -23,9 +23,7 @@ export const AllTodo = () => {
     console.log(serverUrl);
     const getAll = async() => {
         try {
-            const res = await axios.get(`${serverUrl}/u/todo`,{
-                withCredentials: true
-            })
+            const res = await axios.get(`${serverUrl}/u/todo`,{ credentials: "include"})
             if(!res){
                 toast.error("Wrong Route")
                 return
@@ -66,7 +64,7 @@ export const AllTodo = () => {
         }
         const res = await axios.post(`${serverUrl}/u/todo`,{
             title
-        },{withCredentials: true})
+        },{ credentials: "include"})
         if(!res){
             toast.error("Wrong Route")
             return
@@ -84,7 +82,7 @@ export const AllTodo = () => {
         }
         const res  = await axios.post(`${serverUrl}/u/todo/edit/${id}`,{
             title
-        }, { withCredentials: true })
+        },{ credentials: "include"})
         if(!res){
             return
         } else{
@@ -94,7 +92,7 @@ export const AllTodo = () => {
     }
     const deleteClicked = async(id)=>{
         console.log("inside me");
-        const res  = await axios.delete(`${serverUrl}/u/todo/delete/${id}`, { withCredentials: true })
+        const res  = await axios.delete(`${serverUrl}/u/todo/delete/${id}`, { credentials: "include"})
         if(!res){
             return
         } else{
@@ -113,7 +111,7 @@ export const AllTodo = () => {
         }
         const res = await axios.post(`${serverUrl}/u/todo/task/${todoId}`,{
             taskName
-        },{ withCredentials: true})
+        },{ credentials: "include"})
         if(!res){
             toast.error("Wrong Route")
             return
@@ -133,7 +131,7 @@ export const AllTodo = () => {
         }
         const res = await axios.post(`${serverUrl}/u/todo/task/${todoId}/${taskId}`,{
             taskName
-        },{ withCredentials: true})
+        },{ credentials: "include"})
         if(!res){
             toast.error("Wrong Route")
             return
@@ -143,7 +141,7 @@ export const AllTodo = () => {
 
     }
     const deleteTask = async (todoId, taskId)=>{
-        const res = await axios.delete(`${serverUrl}/u/todo/task/${todoId}/${taskId}`,{ withCredentials: true})
+        const res = await axios.delete(`${serverUrl}/u/todo/task/${todoId}/${taskId}`,{ credentials: "include"})
         if(!res){
             toast.error("Wrong Route")
             return
@@ -153,7 +151,7 @@ export const AllTodo = () => {
     }
     const sortByCreation = async () => {
         try {
-            const res = await axios.get(`${serverUrl}/u/todo/sort`,{ withCredentials: true})
+            const res = await axios.get(`${serverUrl}/u/todo/sort`,{ credentials: "include"})
             if(!res){
                 toast.error("Wrong Route")
                 return
@@ -166,7 +164,7 @@ export const AllTodo = () => {
     }
     const sortByUpdation = async () => {
         try {
-            const res = await axios.get(`${serverUrl}/u/todo/sort`,{ withCredentials: true})
+            const res = await axios.get(`${serverUrl}/u/todo/sort`,{ credentials: "include"})
             if(!res){
                 toast.error("Wrong Route")
                 return
@@ -187,7 +185,7 @@ export const AllTodo = () => {
             }
             const res = await axios.post(`${serverUrl}/u/todo/search`,{
                 searchText
-            },{ withCredentials: true})
+            },{ credentials: "include"})
             if(!res){
                 toast.error("Wrong Route")
                 return
@@ -205,7 +203,7 @@ export const AllTodo = () => {
     }
     const logMeOut = async()=>{
         try {
-            const res = await axios.get(`${serverUrl}/api/logout`,{withCredentials:true})
+            const res = await axios.get(`${serverUrl}/api/logout`,{ credentials: "include"})
             if(!res){
                 toast.error("Wrong Path")
                 return
@@ -223,7 +221,7 @@ export const AllTodo = () => {
         try {
             const res = await axios.post(`${serverUrl}/u/todo/task/done/${todoId}/${taskId}`,{
                 done:val
-            },{withCredentials:true})
+            },{ credentials: "include"})
             if(!res){
                 toast.error("Wrong Route")
                 return
