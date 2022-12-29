@@ -9,10 +9,11 @@ import { Link } from "react-router-dom";
 export const Home = ()=>{
     const navigate = useNavigate();
     const [userName, setUserName] = useState("");
+    const Base_URL = "https://todo-backend-gamma.vercel.app"
     const verify = async () => {
         // event.preventDefault();
         try {
-            const res = await axios.get("https://todo-backend-gamma.vercel.app/api/dashboard",{
+            const res = await axios.get(`${Base_URL}/api/dashboard`,{
             withCredentials: true
             })
             console.log("I am inside Home frontend");
