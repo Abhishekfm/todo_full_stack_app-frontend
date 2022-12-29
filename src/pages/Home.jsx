@@ -10,6 +10,8 @@ export const Home = ()=>{
     const navigate = useNavigate();
     const [userName, setUserName] = useState("");
     const Base_URL = "https://todo-backend-gamma.vercel.app"
+    const token = sessionStorage.getItem("token");
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
     const verify = async () => {
         // event.preventDefault();
         try {
