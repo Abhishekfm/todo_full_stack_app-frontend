@@ -211,7 +211,6 @@ export const AllTodo = () => {
                 return
             } else{
                 sessionStorage.clear()
-                window.location.reload(true)
                 toast.success("Successfully Logout")
                 navigate("/")
                 return;
