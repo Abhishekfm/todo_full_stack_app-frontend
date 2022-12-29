@@ -210,8 +210,9 @@ export const AllTodo = () => {
                 toast.error("Wrong Path")
                 return
             } else{
-                toast.success("Successfully Logout")
                 sessionStorage.clear()
+                window.location.reload(true)
+                toast.success("Successfully Logout")
                 navigate("/")
                 return;
             }
